@@ -15,20 +15,20 @@ SECTION .text
 
 global main		
 main:				
-        push    rbp	
+    push    rbp	
         
-        mov rax,0
-        mov rdi,out_fmt_2
-        mov rsi,enter
-        call printf
+    mov rax,0
+    mov rdi,out_fmt_2
+    mov rsi,enter
+    call printf
         
-        mov rax, 0
+    mov rax, 0
 	mov rdi, in_fmt
 	mov rsi, a
 	call scanf
 	
 	
-        mov rax, 0
+    mov rax, 0
 	mov rdi, in_fmt
 	mov rsi, b
 	call scanf	

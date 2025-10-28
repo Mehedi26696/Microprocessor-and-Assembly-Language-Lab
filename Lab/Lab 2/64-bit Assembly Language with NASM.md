@@ -231,19 +231,49 @@ imul rax, rbx, 5    ; rax = rbx * 5
 mov rax, 100        ; Dividend
 cqo                 ; Sign-extend rax into rdx:rax
 idiv rbx            ; rax = quotient, rdx = remainder
+
+Explanation
+This performs a signed division using idiv.
+
+- mov rax, 100 — load dividend into RAX.
+- cqo — sign-extend RAX into RDX:RAX (RDX = 0 if RAX >= 0; RDX = -1 if RAX < 0).
+- idiv rbx — divide signed 128-bit value RDX:RAX by RBX; quotient → RAX, remainder → RDX.
+- Exceptions — divide-by-zero or quotient overflow raises a CPU exception (#DE).
+
+Example
+If RAX = 100 and RBX = 25, then after execution:
+RAX = 4    ; Quotient
+RDX = 0    ; Remainder
 ```
 
 ### 3.3 Logical Instructions
 
 ```assembly
+; Bitwise AND - Both bits must be 1 to result in 1
 and rax, rbx        ; Bitwise AND
-or  rax, rbx        ; Bitwise OR
-xor rax, rbx        ; Bitwise XOR
-not rax             ; Bitwise NOT (one's complement)
+; Example: rax = 0b1100 (12), rbx = 0b1010 (10)
+; Result:  rax = 0b1000 (8)   - only bits 3 are 1 in both
 
-; Bit shifting
+or  rax, rbx        ; Bitwise OR - Either bit can be 1 to result in 1
+; Example: rax = 0b1100 (12), rbx = 0b0011 (3)
+; Result:  rax = 0b1111 (15)  - combines all 1 bits
+
+xor rax, rbx        ; Bitwise XOR - Bits must be different to result in 1
+; Example: rax = 0b1100 (12), rbx = 0b1010 (10)
+; Result:  rax = 0b0110 (6)   - only differing bits become 1
+
+not rax             ; Bitwise NOT - Flips all bits (one's complement)
+; Example: rax = 0b00001100 (12)
+; Result:  rax = 0b11110011 (243 in 8-bit) - all bits inverted
+
+; Bit shifting operations
 shl rax, 2          ; Shift left by 2 bits (multiply by 4)
-shr rax, 1          ; Shift right by 1 bit (divide by 2)
+; Example: rax = 0b00000101 (5)
+; Result:  rax = 0b00010100 (20) - equivalent to 5 * 2^2 = 5 * 4
+
+shr rax, 1          ; Shift right by 1 bit (divide by 2, unsigned)
+; Example: rax = 0b00001100 (12)
+; Result:  rax = 0b00000110 (6)  - equivalent to 12 / 2^1 = 12 / 2
 ```
 
 ### 3.4 Comparison and Testing
