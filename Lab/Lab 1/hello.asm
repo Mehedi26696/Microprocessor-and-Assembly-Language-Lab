@@ -10,7 +10,7 @@ SECTION .text
 
 global main		
 main:				
-        push    rbp		
+    push rbp		
 	
 	mov	rax,[a]
 	mov	rbx,[b]		
@@ -21,7 +21,7 @@ main:
 	mov	rdx,[b]        
 	mov	rcx,[c]         
 	mov	rax,0		
-        call    printf		
+    call printf		
 
 	pop	rbp		
 
