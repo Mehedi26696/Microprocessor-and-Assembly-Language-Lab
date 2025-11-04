@@ -4,7 +4,7 @@ extern scanf
 SECTION .data
 in_str_fmt:    db "%s", 0
 in_int_fmt:    db "%ld", 0
-out_fmt:       db "Student: %s, Average: %ld.%ld, Grade: %c", 10, 0
+out_fmt:       db "Student: %s, Average: %ld.%02ld, Grade: %c", 10, 0
 
 msg_name:      db "Enter student name: ", 0
 msg1:          db "Enter score 1: ", 0
@@ -71,12 +71,14 @@ main:
     cqo
     idiv rbx               ; rax = integer avg, rdx = remainder
     mov [avg_int], rax
+    mov r8, rdx            ; Save remainder before it's lost
 
-    ; ==== Calculate decimal part (approx. one digit) ====
-    imul rdx, 10           ; remainder * 10
+    ; ==== Calculate 2 decimal digits ====
+    mov rax, r8
+    imul rax, 100          ; remainder * 100
     cqo
-    idiv rbx               ; rax = decimal part
-    mov [avg_dec], rax
+    idiv rbx               ; divide by 3 again
+    mov [avg_dec], rax     ; decimal part (00-99)
 
     ; ==== Grade ====
     mov rax, [avg_int]
