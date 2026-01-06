@@ -7,9 +7,7 @@ def run_nasm(file_path: str):
     base_name = os.path.splitext(file_path)[0]
 
     asm_cmd = ["nasm", "-f", "elf64", f"{base_name}.asm", "-o", f"{base_name}.o"]
-    gcc_cmd = ["gcc", "-nostartfiles", "-no-pie", "-o", base_name, f"{base_name}.o"]
-
-
+    gcc_cmd = ["gcc", "-no-pie", "-o", base_name, f"{base_name}.o"]
 
     try:
       
